@@ -9,29 +9,17 @@
 
 {% block container %}
 <div class="container">
-    <a href="iitm-courses/foundation" class="card">
+    {% for course in courses %}
+    {% if course.level == "Diploma" %}
+    <a href="diploma/{{ course.id }}" class="card">
         <div class="card-content">
-            <h2>Foundation</h2>
-            <p>Visit this link to learn more about Foundation.</p>
+            <h2>{{ course.name }}</h2>
+            <p> Course Type: {{ course.type }}</p>
+            <p>Course Level: {{ course.level }}</p>
+            <p>Click on this card to learn more about {{ course.name }}.</p>
         </div>
     </a>
-    <a href="iitm-courses/diploma" class="card">
-        <div class="card-content">
-            <h2>Diploma</h2>
-            <p>Visit this link to learn more about Diploma.</p>
-        </div>
-    </a>
-    <a href="iitm-courses/bsc" class="card">
-        <div class="card-content">
-            <h2>B.Sc.</h2>
-            <p>Visit this link to learn more about B.Sc.</p>
-        </div>
-    </a>
-    <a href="iitm-courses/bs" class="card">
-        <div class="card-content">
-            <h2>B.S.</h2>
-            <p>Visit this link to learn more about B.S.</p>
-        </div>
-    </a>
+    {% endif %}
+    {% endfor %}
 </div>
 {% endblock container %}

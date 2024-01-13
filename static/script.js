@@ -54,3 +54,23 @@ function redirectToYouTube() {
 }
 
 animateDynamicText();
+
+// Open the Add Course Form Modal
+function openAddCourseForm() {
+    var modal = document.getElementById('addCourseModal');
+    modal.style.display = 'block';
+}
+
+// Close the Add Course Form Modal
+function closeAddCourseForm() {
+    var modal = document.getElementById('addCourseModal');
+    modal.style.display = 'none';
+}
+
+// Close the Add Course Form Modal if the user clicks outside of it
+window.onclick = function(event) {
+    var modal = document.getElementById('addCourseModal');
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+};
