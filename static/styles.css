@@ -1,0 +1,206 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-family: 'Your Attractive Font', sans-serif; /* Replace with your preferred font */
+    font-size: 24px;
+}
+
+#youtube-logo {
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#youtube-logo img {
+    width: 100px; 
+}
+
+
+header img {
+    max-width: 200px;
+    margin-right: 10px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: #555;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.sticky-header {
+    padding-top: 60px; /* Adjust this value based on the height of your navigation bar */
+    transition: padding-top 0.3s ease; /* Add smooth transition */
+}
+
+.sticky {
+    position: fixed;
+    width: 100%;
+    top: 0;
+}
+
+
+.nav-links {
+    display: flex;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 5px;
+    margin: 0 5px;
+    transition: background-color 0.3s;
+}
+
+.nav-links a:hover {
+    background-color: #777;
+}
+
+.auth-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.auth-buttons a {
+    text-decoration: none;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    margin-left: 10px;
+    transition: background-color 0.3s;
+}
+
+.auth-buttons a:hover {
+    background-color: #45a049;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.card {
+    flex: 0 0 48%;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s;
+    text-decoration: none;
+    color: #333;
+}
+
+.card:hover {
+    transform: scale(1.02); 
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+}
+
+.card-content {
+    padding: 20px;
+}
+
+@media only screen and (max-width: 768px) {
+    .card {
+        flex: 0 0 100%;
+    }
+}
+
+.toggle-button {
+    display: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.toggle-button .bar {
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+    margin: 6px 0;
+    transition: 0.4s;
+}
+
+@media only screen and (max-width: 768px) {
+    .card {
+        flex: 0 0 100%;
+    }
+
+    .toggle-button {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: #555;
+        z-index: 1;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links a {
+        margin: 0;
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+        border-bottom: 1px solid #777;
+    }
+}
+
+
+
+/* Add the styling for the cursor */
+/* #cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.2em;
+    margin-left: 5px;
+    background-color: #000; /* Adjust the color as needed */
+    /* animation: blink 0.8s infinite; */
+/* } */
+
+/* @keyframes blink {
+    0%, 100% {
+        opacity: 1;
+    }
+} */ 
+
+#dynamic-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

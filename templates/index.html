@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>ByteBuddy | {% block title %}
+        Home
+        {% endblock title %} </title>
+</head>
+
+<body>
+    {% block header %}
+
+
+    <header>
+        <img src="../static/assets/logo.svg" alt="ByteBuddy Logo" width="180" height="50">
+        <div id="dynamic-container">
+            <h1 id="dynamic-text">Welcome to Byte Buddy Family</h1>
+            <h1>
+                <div id="cursor">|</div>
+            </h1>
+        </div>
+        <div id="youtube-logo" onclick="redirectToYouTube()">
+            <img src="../static/assets/youtube-logo.png" alt="YouTube Logo">
+        </div>
+    </header>
+    {% endblock header %}
+    {% block nav %}
+
+
+    <nav id="navbar">
+        <div class="toggle-button" onclick="toggleNavbar()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="#">Projects</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </div>
+        <div class="auth-buttons">
+            <a href="#" style="background-color: #4CAF50;">Login/Signup</a>
+        </div>
+    </nav>
+    {% endblock nav %}
+    {% block container %}
+
+
+    <div class="container">
+        <a href="/iitm-courses" class="card">
+            <img src="../static/assets/iitm.jpeg" alt="courses">
+            <div class="card-content">
+                <h2>IITM Courses</h2>
+                <p>In this section you will find all the IITM BS courses or projects information.</p>
+            </div>
+        </a>
+        <a href="project2.html" class="card">
+            <img src="../static/assets/yt.jpeg" alt="youtube channel">
+            <div class="card-content">
+                <h2>Projects on YouTube</h2>
+                <p>By clicking on this card you can check out all the projects on YouTube Channel. </p>
+            </div>
+        </a>
+        <!-- <a href="project3.html" class="card">
+            <div class="card-content">
+                <h2>Courses</h2>
+                <p>Description for BDM Project goes here...</p>
+            </div>
+        </a> -->
+        <a href="project4.html" class="card">
+            <img src="../static/assets/calc.jpeg" alt="calculator">
+            <div class="card-content">
+                <h2>IITM Result Calculator</h2>
+                <p>By clicking on this card you can check your IITM result.</p>
+            </div>
+        </a>
+    </div>
+    {% endblock container %}
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
