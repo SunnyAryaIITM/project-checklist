@@ -17,7 +17,11 @@
     <header>
         <img src="../static/assets/logo.svg" alt="ByteBuddy Logo" width="180" height="50">
         <div id="dynamic-container">
+            {% if session.get('user_id') %}
+            <h1 id="dynamic-text">Welcome Mr. {{ user.name }} at Byte Buddy Family</h1>
+            {% else %}
             <h1 id="dynamic-text">Welcome to Byte Buddy Family</h1>
+            {% endif %}
             <h1>
                 <div id="cursor">|</div>
             </h1>
