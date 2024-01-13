@@ -1,4 +1,4 @@
-from flask import Flask, redirect, render_template, request, session, url_for
+from flask import Flask, flash, redirect, render_template, request, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
@@ -117,6 +117,7 @@ def register():
         user.role = 'user'
         db.session.add(user)
         db.session.commit()
+        flash('Registration successful!', 'success')
         return redirect(url_for('login'))
     return render_template('auth/register.html')
 
@@ -136,13 +137,14 @@ def add_course():
 
 @app.route('/create-admin')
 def create_admin():
-    user = User.query.filter_by(email='admin').first()
+    user = User.query.filter_by(email='admin@bytebuddy.com').first()
     if not user:
         user = User(name='Admin', email='admin@bytebuddy.com', password='admin')
         user.role = 'admin'
         db.session.add(user)
         db.session.commit()
-    return 'Admin user created'
+        return 'Admin user created'
+    return 'Admin user already exists'
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -163,7 +165,8 @@ def login():
                 return redirect('/admin')
             return redirect(url_for('index'))
         else:
-            return 'Invalid email or password'
+            flash('Invalid email or password', 'error')
+            render_template('auth/login.html')
     return render_template('auth/login.html')
 
 @app.route('/')
@@ -172,6 +175,7 @@ def index():
         user_id = session['user_id']
         user = User.query.get(user_id)
         tasks = Task.query.filter_by(user_id=user_id).all()
+        flash('Welcome, {}!'.format(user.name), 'success')
         return render_template('index.html', user=user, tasks=tasks)
     return render_template('index.html', user=None, tasks=None)
 
@@ -181,6 +185,7 @@ def admin():
         user_id = session['user_id']
         user = User.query.get(user_id)
         return render_template('admin/dashboard.html', user=user)
+    flash('Login required', 'error')
     return redirect(url_for('login'))
 
 @app.route('/iitm-courses', methods=['GET', 'POST'])
@@ -191,6 +196,11 @@ def iitm_courses():
         return render_template('iitm-courses.html', user=user)
     return render_template('iitm-courses.html', user=None)
 
+@app.route('/iitm-courses/foundation', methods=['GET', 'POST'])
+def iitm_foundation():
+    flash('We are under development. Please try to open Diploma Courses for now.', 'warning')
+    return redirect(url_for('iitm_courses'))
+
 @app.route('/iitm-courses/diploma', methods=['GET', 'POST'])
 def iitm_diploma():
     if 'user_id' in session:
@@ -199,6 +209,16 @@ def iitm_diploma():
         return render_template('iitm-courses/diploma.html', user=user, courses=Course.query.all())
     return render_template('iitm-courses/diploma.html', user=None, courses=Course.query.all())
 
+@app.route('/iitm-courses/bsc', methods=['GET', 'POST'])
+def iitm_bsc():
+    flash('We are under development. Please try to open Diploma Courses for now.', 'warning')
+    return redirect(url_for('iitm_courses'))
+
+@app.route('/iitm-courses/bs', methods=['GET', 'POST'])
+def iitm_bs():
+    flash('We are under development. Please try to open Diploma Courses for now.', 'warning')
+    return redirect(url_for('iitm_courses'))
+
 @app.route('/iitm-courses/diploma/<int:course_id>', methods=['GET', 'POST'])
 def iitm_diploma_detail(course_id, checklists=None):
     if 'user_id' in session:
@@ -206,7 +226,8 @@ def iitm_diploma_detail(course_id, checklists=None):
         user = User.query.get(user_id)
         checklists = Checklist.query.filter_by(user_id=user_id, course_id=course_id).all()
         return render_template('iitm-courses/diploma-course.html', user=user, course=Course.query.get(course_id), checklists=checklists)
-    return render_template('iitm-courses/diploma-course.html', user=None, course=Course.query.get(course_id))
+    flash('Login required', 'error')
+    return redirect(url_for('login'))
 
 @app.route('/add-checklist', methods=['GET', 'POST'])
 def add_checklist():
@@ -217,7 +238,9 @@ def add_checklist():
         checklist = Checklist(name=name, course_id=course_id, user_id=user_id)
         db.session.add(checklist)
         db.session.commit()
+        flash('Checklist added successfully', 'success')
         return redirect(url_for('iitm_diploma_detail', course_id=course_id, checklists=Checklist.query.filter_by(user_id=user_id, course_id=course_id).all()))
+    flash('Enter the checklist name', 'info')
     return render_template('add-checklist.html', user=None)
 
 @app.route('/mark_completed/<int:checklist_id>')
@@ -228,7 +251,26 @@ def mark_completed(checklist_id):
         db.session.commit()
     return redirect(url_for('iitm_diploma_detail', course_id=checklist.course_id, checklists=Checklist.query.filter_by(user_id=session['user_id'], course_id=checklist.course_id).all()))
 
-CORS(app)
+@app.route('/mark_incompleted/<int:checklist_id>')
+def mark_incompleted(checklist_id):
+    checklist = Checklist.query.get(checklist_id)
+    if checklist:
+        checklist.is_completed = False
+        db.session.commit()
+    return redirect(url_for('iitm_diploma_detail', course_id=checklist.course_id, checklists=Checklist.query.filter_by(user_id=session['user_id'], course_id=checklist.course_id).all()))
+
+@app.route('/result-prediction', methods=['GET', 'POST'])
+def result_prediction():
+    flash('We are under development. Please try to open IITM Courses for now.', 'warning')
+    return redirect(url_for('index'))
+
+@app.route('/yt-project', methods=['GET', 'POST'])
+def yt_project():
+    flash('We are under development. Please try to open IITM Courses for now.', 'warning')
+    return redirect(url_for('index'))
+
+
+# CORS(app)
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)
  

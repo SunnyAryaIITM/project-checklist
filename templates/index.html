@@ -69,7 +69,7 @@
                 <p>In this section you will find all the IITM BS courses or projects information.</p>
             </div>
         </a>
-        <a href="project2.html" class="card">
+        <a href="/yt-project" class="card">
             <img src="../static/assets/yt.jpeg" alt="youtube channel">
             <div class="card-content">
                 <h2>Projects on YouTube</h2>
@@ -82,7 +82,7 @@
                 <p>Description for BDM Project goes here...</p>
             </div>
         </a> -->
-        <a href="project4.html" class="card">
+        <a href="/result-prediction" class="card">
             <img src="../static/assets/calc.jpeg" alt="calculator">
             <div class="card-content">
                 <h2>IITM Result Calculator</h2>
@@ -91,6 +91,31 @@
         </a>
     </div>
     {% endblock container %}
+    <!-- add flash messages with category -->
+    <div id="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-container flash-{{ category }}">
+                        {{ message }} 
+                    </div>
+                {% endfor %}
+                <script>
+                    setTimeout(function () {
+                        document.querySelectorAll('.flash-container').forEach(function (element) {
+                            element.classList.remove('show');
+                        });
+                    }, 3000);
+                    document.addEventListener('DOMContentLoaded', function () {
+                        document.querySelectorAll('.flash-container').forEach(function (element) {
+                            element.classList.add('show');
+                        });
+                    });
+                </script>
+            {% endif %}
+        {% endwith %}
+    </div>
+    
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 

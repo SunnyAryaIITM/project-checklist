@@ -423,3 +423,45 @@ button {
 button:hover {
     background-color: #45a049;
 }
+
+/* Add this to your CSS file or in a <style> block in your HTML */
+.flash-container {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    margin: 10px;
+    padding: 10px;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    border-radius: 10px;
+}
+
+.flash-container.show {
+    opacity: 1;
+}
+
+.flash-success {
+    background-color: #4CAF50;
+    color: #fff;
+}
+
+.flash-error {
+    background-color: #f44336;
+    color: #fff;
+}
+
+.flash-warning {
+    background-color: #ff9800;
+    color: #fff;
+}
+
+.flash-info {
+    background-color: #2196F3;
+    color: #fff;
+}

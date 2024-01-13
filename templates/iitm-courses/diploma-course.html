@@ -33,7 +33,11 @@
                 {% for checklist in checklists %}
                     <li class="{% if checklist.is_completed %}completed{% else %}incomplete{% endif %}">
                         {{ checklist.name }}
-                        <button onclick="markCompleted('{{ checklist.id }}')">Mark as Completed</button>
+                        {% if checklist.is_completed %}
+                            <button onclick="markIncomplete('{{ checklist.id }}')">Mark as Incomplete</button>
+                        {% else %}
+                            <button onclick="markCompleted('{{ checklist.id }}')">Mark as Completed</button>
+                        {% endif %}
                     </li>
                 {% endfor %}
             </ul>
