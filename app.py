@@ -1,5 +1,6 @@
 from flask import Flask, redirect, render_template, request, session, url_for
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.sqlite3'
@@ -72,6 +73,28 @@ class Course(db.Model):
         self.name = name
         self.level = level
         self.type = type
+
+class Checklist(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    is_completed = db.Column(db.Boolean, default=False)
+
+    def __repr__(self):
+        return '<Checklist %r>' % self.name
+    
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'is_completed': self.is_completed
+        }
+    
+    def __init__(self, name, course_id, user_id):
+        self.name = name
+        self.course_id = course_id
+        self.user_id = user_id
 
 with app.app_context():
     db.create_all()
@@ -177,13 +200,35 @@ def iitm_diploma():
     return render_template('iitm-courses/diploma.html', user=None, courses=Course.query.all())
 
 @app.route('/iitm-courses/diploma/<int:course_id>', methods=['GET', 'POST'])
-def iitm_diploma_detail(course_id):
+def iitm_diploma_detail(course_id, checklists=None):
     if 'user_id' in session:
         user_id = session['user_id']
         user = User.query.get(user_id)
-        return render_template('iitm-courses/diploma-course.html', user=user, course=Course.query.get(course_id))
+        checklists = Checklist.query.filter_by(user_id=user_id, course_id=course_id).all()
+        return render_template('iitm-courses/diploma-course.html', user=user, course=Course.query.get(course_id), checklists=checklists)
     return render_template('iitm-courses/diploma-course.html', user=None, course=Course.query.get(course_id))
 
+@app.route('/add-checklist', methods=['GET', 'POST'])
+def add_checklist():
+    if 'user_id' in session:
+        name = request.form['name']
+        course_id = request.form['course_id']
+        user_id = session['user_id']
+        checklist = Checklist(name=name, course_id=course_id, user_id=user_id)
+        db.session.add(checklist)
+        db.session.commit()
+        return redirect(url_for('iitm_diploma_detail', course_id=course_id, checklists=Checklist.query.filter_by(user_id=user_id, course_id=course_id).all()))
+    return render_template('add-checklist.html', user=None)
+
+@app.route('/mark_completed/<int:checklist_id>')
+def mark_completed(checklist_id):
+    checklist = Checklist.query.get(checklist_id)
+    if checklist:
+        checklist.is_completed = True
+        db.session.commit()
+    return redirect(url_for('iitm_diploma_detail', course_id=checklist.course_id, checklists=Checklist.query.filter_by(user_id=session['user_id'], course_id=checklist.course_id).all()))
+
+CORS(app)
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8000, debug=True)
  

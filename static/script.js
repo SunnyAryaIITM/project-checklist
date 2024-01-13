@@ -74,3 +74,23 @@ window.onclick = function(event) {
         modal.style.display = 'none';
     }
 };
+
+function markCompleted(checklistId) {
+    // Use AJAX to send a request to mark the checklist as completed
+    // Replace 'your_flask_app_url' with the actual URL of your Flask app
+    fetch(`/mark_completed/${checklistId}`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(`Marked checklist as completed with ID: ${checklistId}`);
+                // You can also update the UI here if needed
+            } else {
+                alert('Failed to mark checklist as completed.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+    window.location.reload();
+}

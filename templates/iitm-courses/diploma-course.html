@@ -1,26 +1,45 @@
 {% extends 'index.html' %}
 {% block header %}
-    
+
 {% endblock header %}
 {% block container %}
-    <div class="course-container">
-        <div class="course-header">
-            <div class="course">
-                <h2>{{ course.name }}</h2>
-                <p>Course Type: {{ course.type }}</p>
-                <p>Course Level: {{ course.level }}</p>
-            </div>
-            <div class="add-checklist">
-                <button>Add Checklist</button>
-            </div>
+<div class="course-container">
+    <div class="course-header">
+        <div class="course">
+            <h2>{{ course.name }}</h2>
+            <p>Course Type: {{ course.type }}</p>
+            <p>Course Level: {{ course.level }}</p>
         </div>
-        <div class="checklist">
-            <h3>Checklist</h3>
-            <ul>
-                {% for checklist in checklists %}
-                    <li>{{ checklist.name }}</li>
-                {% endfor %}
-            </ul>
+        <div class="add-checklist">
+            <button onclick="openAddCourseForm()">Add Checklist</button>
+        </div>
+        <div id="addCourseModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeAddCourseForm()">&times;</span>
+                <form id="addCourseForm" action="/add-checklist" method="POST">
+                    <!-- Your form fields go here -->
+                    <label for="name">Checklist Name</label>
+                    <input type="text" id="name" name="name" required>
+                    <input type="text" id="course_id" name="course_id" value="{{ course.id }}" hidden="true">
+                    <button type="submit">Add Checklist</button>
+                </form>
+            </div>
         </div>
     </div>
+    <div class="checklist">
+        {% if checklists | length > 0 %}
+            <h3>To finish, you need to complete the following checklist</h3>
+            <ul>
+                {% for checklist in checklists %}
+                    <li class="{% if checklist.is_completed %}completed{% else %}incomplete{% endif %}">
+                        {{ checklist.name }}
+                        <button onclick="markCompleted('{{ checklist.id }}')">Mark as Completed</button>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <h3>No checklist found</h3>
+        {% endif %}
+    </div>
+</div>
 {% endblock container %}
