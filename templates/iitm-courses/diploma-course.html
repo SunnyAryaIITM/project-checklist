@@ -3,6 +3,44 @@
 
 {% endblock header %}
 {% block container %}
+<div class="edit-checklist">
+    <button onclick="openEditChecklistForm()">Edit Checklist</button>
+</div>
+<div id="editChecklistModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeEditChecklistForm()">&times;</span>
+        <form id="editChecklistForm" onsubmit="return false;">
+            <h3>Edit Checklist</h3>
+            <!-- Checkboxes for each checklist item -->
+            <ul class="edit-checklist-list">
+                <!-- Update this part in your existing HTML file -->
+
+                {% for checklist in checklists %}
+                <li class="checklist-item">
+                    <div>
+                        <input type="checkbox" id="checklist_{{ checklist.id }}" name="checklists[]"
+                            value="{{ checklist.id }}">
+                        <label for="checklist_{{ checklist.id }}">{{ checklist.name }}</label>
+                    </div>
+                    <div class="action-buttons">
+                        <!-- <button onclick="markCompleted('{{ checklist.id }}')">Mark as Completed</button>
+                        <button onclick="markIncompleted('{{ checklist.id }}')">Mark as Incomplete</button> -->
+                        <button onclick="renameChecklist('{{ checklist.id }}')">Rename</button>
+                    </div>
+                    <div class="rename-container" id="renameContainer_{{ checklist.id }}" style="display: none;">
+                        <input type="text" id="renameInput_{{ checklist.id }}" value="{{ checklist.name }}">
+                        <button onclick="confirmRename('{{ checklist.id }}')">Confirm</button>
+                    </div>
+                </li>
+                {% endfor %}
+
+            </ul>
+            <button class="delete-btn" onclick="deleteSelectedChecklists()">Delete Selected</button>
+        </form>
+    </div>
+</div>
+
+
 <div class="course-container">
     <div class="course-header">
         <div class="course">
@@ -28,21 +66,21 @@
     </div>
     <div class="checklist">
         {% if checklists | length > 0 %}
-            <h3>To finish, you need to complete the following checklist</h3>
-            <ul>
-                {% for checklist in checklists %}
-                    <li class="{% if checklist.is_completed %}completed{% else %}incomplete{% endif %}">
-                        {{ checklist.name }}
-                        {% if checklist.is_completed %}
-                            <button onclick="markIncomplete('{{ checklist.id }}')">Mark as Incomplete</button>
-                        {% else %}
-                            <button onclick="markCompleted('{{ checklist.id }}')">Mark as Completed</button>
-                        {% endif %}
-                    </li>
-                {% endfor %}
-            </ul>
+        <h3>To finish, you need to complete the following checklist</h3>
+        <ul>
+            {% for checklist in checklists %}
+            <li class="{% if checklist.is_completed %}completed{% else %}incomplete{% endif %}">
+                {{ checklist.name }}
+                {% if checklist.is_completed %}
+                <button onclick="markIncompleted('{{ checklist.id }}')">Mark as Incomplete</button>
+                {% else %}
+                <button onclick="markCompleted('{{ checklist.id }}')">Mark as Completed</button>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
         {% else %}
-            <h3>No checklist found</h3>
+        <h3>No checklist found</h3>
         {% endif %}
     </div>
 </div>

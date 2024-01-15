@@ -1,4 +1,4 @@
-from flask import Flask, flash, redirect, render_template, request, session, url_for
+from flask import Flask, flash, jsonify, redirect, render_template, request, session, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
@@ -269,6 +269,35 @@ def yt_project():
     flash('We are under development. Please try to open IITM Courses for now.', 'warning')
     return redirect(url_for('index'))
 
+@app.route('/delete_checklists', methods=['POST'])
+def delete_checklists():
+    try:
+        data = request.get_json()
+        checklist_ids = data.get('checklistIds', [])
+
+        # Perform deletion logic here based on the checklist IDs
+        for checklist_id in checklist_ids:
+            checklist = Checklist.query.get(checklist_id)
+            if checklist:
+                db.session.delete(checklist)
+
+        db.session.commit()
+        flash('Checklists deleted successfully', 'success')
+        return jsonify({"success": True})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)})
+
+@app.route('/rename_checklist/<int:checklist_id>', methods=['POST'])
+def rename_checklist(checklist_id):
+    checklist = Checklist.query.get(checklist_id)
+    if checklist:
+        new_name = request.json.get('new_name')
+        checklist.name = new_name
+        db.session.commit()
+        flash('Checklist renamed successfully', 'success')
+        return jsonify(success=True)
+    else:
+        return jsonify(success=False, error='Checklist not found'), 404
 
 # CORS(app)
 if __name__ == '__main__':

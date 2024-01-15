@@ -465,3 +465,156 @@ button:hover {
     background-color: #2196F3;
     color: #fff;
 }
+
+/* Add this to your existing CSS or in a <style> block in your HTML */
+
+/* Style for the Edit Checklist Form Modal */
+#editChecklistModal {
+    display: none;
+}
+
+#editChecklistModal .modal-content {
+    background-color: #fefefe;
+    margin: 18% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+}
+
+#editChecklistModal h3 {
+    text-align: center;
+}
+
+#editChecklistModal .edit-checklist-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#editChecklistModal li {
+    margin-bottom: 10px;
+}
+
+#editChecklistModal label {
+    margin-left: 5px;
+}
+
+#editChecklistModal button {
+    padding: 5px 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+#editChecklistModal button.delete-btn {
+    background-color: #f44336; /* Red for delete button */
+}
+
+#editChecklistModal button:hover {
+    background-color: #45a049;
+}
+
+#editChecklistModal .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#editChecklistModal .close:hover,
+#editChecklistModal .close:focus {
+    color: black;
+    text-decoration: none;
+}
+
+/* Adjustments for mobile responsiveness */
+@media only screen and (max-width: 768px) {
+    #editChecklistModal .modal-content {
+        width: 90%;
+    }
+}
+
+/* Add this to your existing CSS or in a <style> block in your HTML */
+
+.checklist-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px; /* Add margin for spacing between checklist items */
+}
+
+.action-buttons {
+    display: flex;
+}
+
+.action-buttons button {
+    margin-left: 5px; /* Add spacing between action buttons */
+}
+
+.rename-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.rename-container input {
+    margin-right: 10px;
+}
+
+.rename-container button {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+/* Keep your existing styles for larger screens */
+
+/* Add media query for smaller screens */
+@media only screen and (max-width: 768px) {
+    .rename-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .rename-container input {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}
+
+
+/* ... (Your existing styles) */
+
+/* Style for the Edit Checklist button */
+.edit-checklist {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.edit-checklist button {
+    padding: 10px 15px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Adjustments for mobile responsiveness */
+@media only screen and (max-width: 768px) {
+    .edit-checklist button {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+}
+
+

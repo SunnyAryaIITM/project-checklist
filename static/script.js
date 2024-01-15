@@ -76,41 +76,125 @@ window.onclick = function(event) {
 };
 
 function markCompleted(checklistId) {
-    // Use AJAX to send a request to mark the checklist as completed
-    // Replace 'your_flask_app_url' with the actual URL of your Flask app
     fetch(`/mark_completed/${checklistId}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert(`Marked checklist as completed with ID: ${checklistId}`);
-                // You can also update the UI here if needed
-            } else {
-                alert('Failed to mark checklist as completed.');
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
             }
+            console.log(response);
+            window.location.reload()
         })
         .catch(error => {
             console.error('Error:', error);
         });
-
-    window.location.reload();
 }
 
-function markIncomplete(checklistId) {
-    // Use AJAX to send a request to mark the checklist as completed
-    // Replace 'your_flask_app_url' with the actual URL of your Flask app
+function markIncompleted(checklistId) {
     fetch(`/mark_incompleted/${checklistId}`)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            window.location.reload()
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+}
+
+// Open the Edit Checklist Form Modal
+function openEditChecklistForm() {
+    var modal = document.getElementById('editChecklistModal');
+    modal.style.display = 'block';
+}
+
+// Close the Edit Checklist Form Modal
+function closeEditChecklistForm() {
+    var modal = document.getElementById('editChecklistModal');
+    modal.style.display = 'none';
+}
+
+// Rename a checklist
+function renameChecklist(checklistId) {
+    // Implement renaming logic here
+    console.log('Rename checklist with ID:', checklistId);
+}
+
+// Delete selected checklists
+// Add this function to your existing JavaScript file
+
+function deleteSelectedChecklists() {
+    var checkboxes = document.querySelectorAll('input[name="checklists[]"]:checked');
+    var checklistIds = Array.from(checkboxes).map(checkbox => checkbox.value);
+
+    if (checklistIds.length === 0) {
+        alert('Please select at least one checklist to delete.');
+        return;
+    }
+
+    fetch('/delete_checklists', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ checklistIds: checklistIds }),
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
         .then(data => {
             if (data.success) {
-                alert(`Marked checklist as incompleted with ID: ${checklistId}`);
-                // You can also update the UI here if needed
+                // Optional: Display a success message or update UI
+                window.location.reload();
             } else {
-                alert('Failed to mark checklist as incompleted.');
+                console.error('Failed to delete checklists:', data.error);
             }
         })
         .catch(error => {
             console.error('Error:', error);
         });
-
-    window.location.reload();
 }
+
+// Add these functions to your existing JavaScript file
+
+function renameChecklist(checklistId) {
+    // Hide the label and show the rename input field
+    document.getElementById(`renameContainer_${checklistId}`).style.display = 'flex';
+    document.querySelector(`label[for="checklist_${checklistId}"]`).style.display = 'none';
+}
+
+function confirmRename(checklistId) {
+    var newName = document.getElementById(`renameInput_${checklistId}`).value;
+
+    // Use fetch to send the updated name to the server
+    fetch(`/rename_checklist/${checklistId}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            new_name: newName,
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Update the label and hide the rename input field
+            document.querySelector(`label[for="checklist_${checklistId}"]`).textContent = newName;
+            document.getElementById(`renameContainer_${checklistId}`).style.display = 'none';
+            document.querySelector(`label[for="checklist_${checklistId}"]`).style.display = 'flex';
+        } else {
+            console.error('Failed to rename checklist:', data.error);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+// Other functions (renameChecklist, cancelRename) remain unchanged
+
+
