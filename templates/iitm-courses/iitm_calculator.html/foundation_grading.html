@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grading</title>
+</head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@1,200&display=swap" rel="stylesheet">
+<style>
+    * {
+        font-family: 'Noto Sans', sans-serif;
+    }
+    html {
+        display: flex;
+        justify-content: center;
+        position: relative;
+    }
+    body {
+        height: 708px;
+        width: 600px;
+        border: 2px solid;
+        border-radius: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    body h {
+        font-weight: bold;
+    }
+    input {
+        width: 500px;
+        height: 35px;
+    }
+    button {
+        margin-top: 30px;
+        height: 40px;
+        width: 100px;
+        border-radius: 20px;
+        border: 2px solid;
+        background-color: rgb(133 0 255);
+        font-size: 20px;
+    }
+</style>
+<body>
+    <div class="bigcontainer">
+        <div class="container">
+            <h3>Graded Assignment Average:</h3>
+            <input type="number" placeholder="Enter Graded Assignment Average Marks:">
+            <h3>Final Exam:</h3>
+            <input type="number" placeholder="Enter Final Exam Marks:">
+            <h3>Quiz 1:</h3>
+            <input type="number" placeholder="Enter Quiz 1 Marks:">
+            <h3>Quiz 2:</h3>
+            <input type="number" placeholder="Enter Quiz 2 Marks:">
+            <h3>Bonus Marks:</h3>
+            <input type="number" placeholder="Enter Bonus Marks:">
+            <h3>Extra Grading Marks:</h3>
+            <input type="number" placeholder="Enter Extra Grading Marks:">
+            <br>
+            <a href="./result.html"><button>Calculate </button></a>
+        </div>
+    </div>
+</body>
+</html>

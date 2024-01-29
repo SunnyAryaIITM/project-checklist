@@ -1,0 +1,31 @@
+
+*{
+    font-family: 'Noto Sans', sans-serif;
+  }
+  .para{
+      font-size: 2rem;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+    }
+    button {
+      border-radius: 10px;
+      background-color:#007bff;
+      height: 50px;
+      padding: 10px;
+      padding-left: 20px;
+      padding-right: 20px;
+      border: 0;
+     }
+     button a{
+      color: white;
+      position: relative;
+      font-size: 17px;
+      text-decoration: none;
+      }
+      .container{
+          display: flex;
+          justify-content: center;
+          gap:25px;
+          flex-wrap: wrap;
+      }
